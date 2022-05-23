@@ -28,7 +28,7 @@ const reducer = (state = myInitialState, action) => {
     case 'hasErros':
       return {
         ...state,
-        errors: state.errors + payload.myErrors,
+        errors: state.errors,
       };
     default:
       return state;
@@ -48,10 +48,13 @@ const useCounter = () => {
 
   const addMyCustomNumber = (payload) => {
     dispatch({ payload, type: 'addMyNumber' });
+    console.log('payload is ', payload);
   };
 
   const addErrors = (payload) => {
     dispatch({ payload, type: 'hasErrors' });
+    console.log(state.errors);
+    console.log('payload is ', payload);
   };
 
   const api = { addToCounter, removeToCounter, addMyCustomNumber, addErrors };
@@ -71,8 +74,11 @@ export default function App() {
         Add My Custom number
       </button>
       <br /> <br />
-      <h2>{state.errors}</h2>
-      <button onClick={() => api.addErrors({})}>Add Errors</button>
+      <h2>
+        {state.errors.map((item) => {
+          return <li>{item}</li>;
+        })}
+      </h2>
     </div>
   );
 }
